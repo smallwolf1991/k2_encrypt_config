@@ -1,0 +1,16 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+li{
+  padding:5px;
+}
+label{
+  padding-right: 10px;
+}
+#mac{
+  width:200px;
+}
+a {
+  color: #00B7FF;
+}
