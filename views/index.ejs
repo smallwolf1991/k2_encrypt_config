@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
     <script>
-      function checkMAC(o){
-        var value = o.value;
-        var regMAC= /^[A-F0-9]{2}(\:[A-F0-9]{2}){5}$/;
-        return regMAC.test(value);
-      }
+        function checkMAC(o) {
+            var value = o.value;
+            var regMAC = /^[A-F0-9]{2}(\:[A-F0-9]{2}){5}$/i;
+            return regMAC.test(value);
+        }
     </script>
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <ul>
-      <li>MAC地址为WAN口的网卡地址, 例如：CC:81:DA:AA:BB:CC <i style="color:red;">注意：必须以英文冒号为分割符</i></li>
-      <li>将下载的配置文件恢复至路由器</li>
-      <li>使用SecureCRT进行SSH2登录可进行终端操作, 用户名:root,密码:smallwolf</li>
-      <li>使用WinSCP进行SCP登录可进行文件管理编辑等操作, 用户名:root,密码:smallwolf</li>
-      <li>该配置文件只在K2路由器软件版本号：22.4.5.39测试通过，其他版本暂无测试,生成的配置文件仅针对原厂固件</li>
-      <li>恢复配置过程中，当看到路由器的<b style="color: red;">红灯闪烁</b>时意味着SSH和SCP服务已经可以使用</li>
-    </ul>
-    <p><b style="color: red;">最后提醒：上传生成的配置文件将会重置你的路由器配置</b></p>
-  <form enctype="application/x-www-form-urlencoded" action="/" method="post" target="hiddownload_iframe" onsubmit="return checkMAC(document.getElementById('mac'))">
-    <label for="mac">MAC地址:</label><input id="mac" type="text" value="" placeholder="请填写登录页面底部的MAC地址" name="mac"/>
-    <input type="submit" value="生成"/>
-  </form>
-  <iframe style="display: none;" name="hiddownload_iframe"></iframe>
-  </body>
+</head>
+<body>
+<h1><%= title %></h1>
+<ul>
+    <li>MAC地址为WAN口的网卡地址, 例如：CC:81:DA:AA:BB:CC <i style="color:red;">注意：必须以英文冒号为分割符</i></li>
+    <li>将下载的配置文件恢复至路由器</li>
+    <li>使用SecureCRT进行SSH2登录可进行终端操作, 用户名:root,密码:smallwolf</li>
+    <li>使用WinSCP进行SCP登录可进行文件管理编辑等操作, 用户名:root,密码:smallwolf</li>
+    <li>该配置文件只在K2路由器软件版本号：22.4.5.39测试通过，其他版本暂无测试,生成的配置文件仅针对原厂固件</li>
+    <li>恢复配置过程中，当看到路由器的<b style="color: red;">红灯闪烁</b>时意味着SSH和SCP服务已经可以使用</li>
+</ul>
+<p><b style="color: red;">最后提醒：上传生成的配置文件将会重置你的路由器配置</b></p>
+<form enctype="multipart/form-data" action="/" method="post" target="hiddownload_iframe"
+      onsubmit="return checkMAC(document.getElementById('mac'))">
+    <div style="margin-bottom: 20px;padding:5px;background-color:forestgreen;"><label for="mac">MAC地址:</label><input id="mac" type="text"
+                                                                                                 value=""
+                                                                                                 placeholder="请填写登录页面底部的MAC地址"
+                                                                                                 name="mac"/></div>
+    <div style="margin-bottom: 20px;padding:5px;background-color:grey;"><label for="customFile">自定义配置:</label><input id="customFile" type="file" placeholder="格式为tar.gz,否则K2不识别"
+                                                      name="file"/></div>
+    <input type="submit" value="生成"/> <input type="reset" value="重新填写"/>
+</form>
+<p>绿色区域是必填项，灰色区域是选填项</p>
+<iframe style="display: none;" name="hiddownload_iframe"></iframe>
+</body>
 </html>

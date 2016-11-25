@@ -1,4 +1,5 @@
 var express = require('express');
+var fs = require('fs');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -8,7 +9,9 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 
 var app = express();
-
+if(!fs.existsSync('../private_temp')){
+  fs.mkdirSync('../private_temp');
+}
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -41,5 +44,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-global.exmapleFileBuffer = require('fs').readFileSync("./examples/example.tar.gz");
 module.exports = app;
