@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Phicomm encrypt config.data
 
 # 环境要求
@@ -25,3 +26,10 @@ windows 用户可以使用迅雷下载openssl
 
 地址: [http://downloads.sourceforge.net/gnuwin32/openssl-0.9.8h-1-setup.exe](http://downloads.sourceforge.net/gnuwin32/openssl-0.9.8h-1-setup.exe "点我下载")
 
+=======
+# Phicomm encrypt config.dat
+
+生成K2的配置文件，可以用于开启SSH和SCP；
+
+之前是可以自定义配置文件的压缩包，考虑到一切从简的风格，直接就把包固定了
+>>>>>>> 437a9a59881726e6145f852bd61a238f4ec7a957
