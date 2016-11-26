@@ -1,5 +1,5 @@
 
-# Phicomm encrypt config.data
+# Phicomm encrypt config.dat
 
 # 环境要求
 

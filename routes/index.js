@@ -8,12 +8,17 @@ const path = require('path');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', {title: 'PHICOMMK2 开启SSH登录配置文件生成'});
+  res.redirect('/encrypt');
 });
 /* GET home page. */
-router.post('/', multipart({uploadDir: '../private_temp/'}), function (req, res, next) {
+router.get('/encrypt', function (req, res, next) {
+  res.render('encrypt', {title: 'PHICOMMK2 开启SSH登录配置文件生成'});
+});
+/* GET home page. */
+router.post('/encrypt', multipart({uploadDir: '../private_temp/'}), function (req, res, next) {
   let mac = req.body.mac;
-  let file = req.files &&　req.files.file || {path: path.join(__dirname, '/../examples/example.tar.gz')};
+  let file = req.files && req.files.file;
+  file = file.size > 0 ? file : {path: path.join(__dirname, '/../examples/example.tar.gz')};
   if (!mac) {
     throw new Error("mac address must be a string!");
   }
@@ -43,5 +48,42 @@ function addHeader(mac, filePath) {
   const newTempPath = path.join(__dirname, '/../private_temp/', mac.replace(/[:-]/g, '') + '-' + new Date().getTime().toString());
   fs.writeFileSync(newTempPath, result);
   return newTempPath;
+}
+
+
+/* GET home page. */
+router.get('/decrypt', function (req, res, next) {
+  res.render('decrypt', {title: 'PHICOMMK2 开启SSH登录配置文件生成'});
+});
+/* GET home page. */
+router.post('/decrypt', multipart({uploadDir: '../private_temp/'}), function (req, res, next) {
+  let mac = req.body.mac;
+  let file = req.files && req.files.file;
+  if (!mac) {
+    throw new Error("mac address must be a string!");
+  }
+  if (!file) {
+    throw new Error("file is empty!");
+  }
+  mac = mac.toUpperCase();
+  let decodeBuff = crc.decrypt(file.path, mac);
+  const gzBuff = removeHeader(mac, decodeBuff);
+  res.set('Content-Disposition', 'attachment; filename=phicommk2.tar.gz');
+  res.set("Content-Length", gzBuff.length);
+  res.set("Content-Type", 'application/octet-stream');
+  res.send(gzBuff);
+  next();
+});
+
+function removeHeader(mac, decodeBuff) {
+  let headerBytes = [0x1f, 0x8b];
+  let gzipSignBuff = Buffer.from(headerBytes);
+  let gzHeaderIndex1 = decodeBuff.indexOf(gzipSignBuff[0]);
+  let gzHeaderIndex = decodeBuff.indexOf(gzipSignBuff[1], gzHeaderIndex1);
+  if(!~gzHeaderIndex){
+    throw new Error('this maybe not a encrypt file!');
+  }
+  let gzBuff = decodeBuff.slice(gzHeaderIndex);
+  return gzBuff;
 }
 module.exports = router;

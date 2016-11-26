@@ -20,8 +20,8 @@ function encrypt(gzFilePath, mac, out_encoding) {
 }
 function decrypt(encodeFilePath, mac) {
   let key = genKey(mac);
-  let encodeStr = execSync(`openssl aes-128-cbc -d -k ${key} -base64 -in ${encodeFilePath}`);
-  return encodeStr;
+  let decodeBuff = execSync(`openssl aes-128-cbc -d -k ${key} -base64 -in ${encodeFilePath}`);
+  return decodeBuff;
 }
 module.exports = {
   encrypt:encrypt,
