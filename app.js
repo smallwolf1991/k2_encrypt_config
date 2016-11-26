@@ -9,8 +9,8 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 
 var app = express();
-if(!fs.existsSync('../private_temp')){
-  fs.mkdirSync('../private_temp');
+if(!fs.existsSync(__dirname + '/./private_temp')){
+  fs.mkdirSync(__dirname + '/./private_temp');
 }
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
