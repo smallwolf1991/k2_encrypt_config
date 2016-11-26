@@ -13,6 +13,8 @@
 </head>
 <body>
 <h1><%= title %></h1>
+<a href="/encrypt" style="display: block;padding:10px;">加密</a>
+
 <form enctype="multipart/form-data" action="/decrypt" method="post" target="hiddownload_iframe"
       onsubmit="return checkMAC(document.getElementById('mac'))">
     <div style="margin-bottom: 20px;padding:5px;background-color:forestgreen;"><label for="mac">MAC地址:</label><input id="mac" type="text"
