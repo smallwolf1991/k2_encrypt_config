@@ -59,7 +59,7 @@ router.get('/decrypt', function (req, res, next) {
   res.render('decrypt', {title: 'PHICOMMK2 开启SSH登录配置文件生成'});
 });
 /* GET home page. */
-router.post('/decrypt', multipart({uploadDir: __driname + '/../private_temp/'}), function (req, res, next) {
+router.post('/decrypt', multipart({uploadDir: __dirname + '/../private_temp/'}), function (req, res, next) {
   let mac = req.body.mac;
   let file = req.files && req.files.file;
   if (!mac) {
