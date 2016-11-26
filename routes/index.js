@@ -15,7 +15,7 @@ router.get('/encrypt', function (req, res, next) {
   res.render('encrypt', {title: 'PHICOMMK2 开启SSH登录配置文件生成'});
 });
 /* GET home page. */
-router.post('/encrypt', multipart({uploadDir: '../private_temp/'}), function (req, res, next) {
+router.post('/encrypt', multipart({uploadDir:__dirname + '/../private_temp/'}), function (req, res, next) {
   let mac = req.body.mac;
   let file = req.files && req.files.file;
   file = file.size > 0 ? file : {path: path.join(__dirname, '/../examples/example.tar.gz')};
