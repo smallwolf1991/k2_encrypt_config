@@ -83,7 +83,7 @@ function removeHeader(mac, decodeBuff) {
   if(!~gzHeaderIndex){
     throw new Error('this maybe not a encrypt file!');
   }
-  let gzBuff = decodeBuff.slice(gzHeaderIndex);
+  let gzBuff = decodeBuff.slice(gzHeaderIndex - 1);
   return gzBuff;
 }
 module.exports = router;
