@@ -62,7 +62,7 @@ router.post('/decrypt', multipart({uploadDir: '../private_temp/'}), function (re
   if (!mac) {
     throw new Error("mac address must be a string!");
   }
-  if (!file) {
+  if (file.size === 0) {
     throw new Error("file is empty!");
   }
   mac = mac.toUpperCase();
