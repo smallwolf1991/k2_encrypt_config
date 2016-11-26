@@ -22,6 +22,9 @@ router.post('/encrypt', multipart({uploadDir: '../private_temp/'}), function (re
   if (!mac) {
     throw new Error("mac address must be a string!");
   }
+  if(file.size > 1024*1024){
+    throw new Error("file size is too large, limit to 1M!");
+  }
   mac = mac.toUpperCase();
   let resultFilePath = addHeader(mac, file.path);
   let encodeStr = crc.encrypt(resultFilePath, mac);
@@ -64,6 +67,9 @@ router.post('/decrypt', multipart({uploadDir: '../private_temp/'}), function (re
   }
   if (file.size === 0) {
     throw new Error("file is empty!");
+  }
+  if(file.size > 1024*1024){
+    throw new Error("file size is too large, limit to 1M!");
   }
   mac = mac.toUpperCase();
   let decodeBuff = crc.decrypt(file.path, mac);
