@@ -82,7 +82,15 @@ function crc32(buf, previous) {
   return Math.abs(crc);
 }
 function genKey(mac) {
-  return crc32(genStr(mac)).toString(16).toUpperCase();
+  let crcHex = crc32(genStr(mac)).toString(16);
+  if (crcHex.length < 8) {
+    let prefix = [];
+    for (let i = 0; i < 8 - crcHex.length; i++) {
+      prefix.push('0');
+    }
+    crcHex = prefix.join('') + crcHex;
+  }
+  return crcHex.toUpperCase();
 }
 function unsignedInt(v) {
   return v.charCodeAt(0);
